@@ -1,7 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const logger = require('morgan')
-var path = require('path')
+const path = require('path')
 
 const heroesRouter = require('./routes/api/heroes')
 
@@ -14,7 +14,7 @@ app.use(logger(formatsLogger))
 app.use(cors())
 app.use(express.json())
 app.use(express.static('public'))
-app.use(serveStatic(path.join(__dirname, 'public')))
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 // Function to remove all documents in collection
 // deleteAllHeroes()

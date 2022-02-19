@@ -7,6 +7,7 @@ const imagesDir = path.join(__dirname, '../', 'public', 'images')
 const addHero = async (req, res) => {
   const body = req.body
 
+  // Removing images
   const images = req.files.map(file => {
     const { path: tempUpload, originalname } = file
     const resultUpload = path.join(imagesDir, originalname)
@@ -19,6 +20,7 @@ const addHero = async (req, res) => {
     return image
   })
 
+  // Check if hero already exists
   const hero = await Hero.findOne({ nickname: req.body.nickname })
   if (hero) {
     const error = new Error(
@@ -28,6 +30,7 @@ const addHero = async (req, res) => {
     throw error
   }
 
+  // Create new Hero
   const result = await Hero.create({ ...body, images })
 
   console.log(`Hero "${req.body.nickname}" created`)

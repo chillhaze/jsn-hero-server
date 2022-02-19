@@ -3,9 +3,13 @@ const router = express.Router()
 
 const { joiSchema } = require('../../models')
 const { ctrlWrapper, validation, upload } = require('../../middlewares')
-const { getHeroes, addHero, updateHero } = require('../../controllers')
-
-// use validation middleware with post/put requests - validation(joiSchema)
+const {
+  getHeroes,
+  addHero,
+  updateHero,
+  removeImage,
+  deleteHero,
+} = require('../../controllers')
 
 router.get('/get-all-heroes', ctrlWrapper(getHeroes))
 
@@ -22,5 +26,9 @@ router.put(
   validation(joiSchema),
   ctrlWrapper(updateHero),
 )
+
+router.put('/remove-image/:id', ctrlWrapper(removeImage))
+
+router.delete('/delete-hero/:id', ctrlWrapper(deleteHero))
 
 module.exports = router

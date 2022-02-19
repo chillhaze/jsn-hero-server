@@ -4,10 +4,6 @@ const Joi = require('joi')
 // Hero schema
 const heroSchema = Schema(
   {
-    // _id: {
-    //   type: Object,
-    //   required: [true, 'Unknown hero name'],
-    // },
     nickname: {
       type: String,
       required: [true, 'Unknown hero name'],
@@ -44,7 +40,11 @@ const joiSchema = Joi.object({
   superpowers: Joi.string(),
   catch_phrase: Joi.string(),
   images: Joi.array().items(Joi.string()),
-  // images: Joi.string().required(),
+  // Array for more than one image
+  old_images: Joi.alternatives().try(
+    Joi.array().items(Joi.string()),
+    Joi.string(),
+  ),
 })
 
 const Hero = model('heroes', heroSchema)

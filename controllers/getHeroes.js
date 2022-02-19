@@ -1,12 +1,10 @@
 const { Hero } = require('../models')
-// console.log(Hero)
 
 const getHeroes = async (req, res) => {
   // Pagination consts
   const { currentPage, pageItemsLimit } = req.query
   const skip = (currentPage - 1) * pageItemsLimit
 
-  // const result = await Hero.find({})
   const result = await Hero.find({}, '', {
     skip,
     limit: Number(pageItemsLimit),

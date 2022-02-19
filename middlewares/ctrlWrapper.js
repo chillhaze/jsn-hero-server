@@ -7,6 +7,7 @@ const ctrlWrapper = controller => {
     } catch (error) {
       console.log('ctrlWrapper: ', error)
 
+      // Remove files if operation fails
       if (req.files) {
         req.files.forEach(file => fs.unlink(file.path))
       }

@@ -6,24 +6,27 @@ const imagesDir = path.join(__dirname, '../', 'public', 'images')
 
 const updateHero = async (req, res) => {
   const body = req.body
-  console.log('body', body)
+  const oldImages = req.body.old_images
+  console.log('oldImages', oldImages)
 
   const heroId = req.params.id
 
-  console.log('id to update', heroId)
+  const images = req.files.map(file => {
+    const { path: tempUpload, originalname } = file
+    const resultUpload = path.join(imagesDir, originalname)
 
-  if (req.files) {
-    const images = req.files.map(file => {
-      const { path: tempUpload, originalname } = file
-      const resultUpload = path.join(imagesDir, originalname)
+    // Remove files from temp dir to public/images
+    fs.rename(tempUpload, resultUpload)
 
-      // Remove files from temp dir to public/images
-      fs.rename(tempUpload, resultUpload)
+    const image = path.join('images', originalname)
 
-      const image = path.join('images', originalname)
+    return image
+  })
 
-      return image
-    })
+  if (typeof oldImages === 'string') {
+    images.unshift(oldImages)
+  } else {
+    images.unshift(...oldImages)
   }
 
   const hero = await Hero.findById({ _id: heroId })
@@ -39,7 +42,10 @@ const updateHero = async (req, res) => {
     {
       _id: heroId,
     },
-    body,
+    {
+      ...body,
+      images,
+    },
     {
       new: true,
     },

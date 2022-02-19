@@ -14,6 +14,9 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static('public'))
 
+// Function to remove all documents in collection
+// deleteAllHeroes()
+
 // Routes
 app.use('/api/heroes', heroesRouter)
 

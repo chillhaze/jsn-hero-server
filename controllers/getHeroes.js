@@ -16,15 +16,6 @@ const getHeroes = async (req, res) => {
     throw error
   }
 
-  // const url = 'https://young-fjord-67537.herokuapp.com/'
-
-  // result.forEach((item, i) => {
-  //   let updatedImages = []
-  //   result[i].images.map(image => updatedImages.push(`${url}${image}`))
-  //   result[i].images = updatedImages
-  //   return { ...item }
-  // })
-
   // Get Heroes total count
   const count = await Hero.count()
 
